@@ -1,0 +1,35 @@
+name: Generate DOCX and EPUB
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  generate-content:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+
+      - name: Generate DOCX file
+        run: |
+          cd src/
+          pandoc --syntax-definition="zig.xml" --highlight-style="zig.theme" *.md -o learning-zig.ru.docx
+
+      - name: Generate EPUB file
+        run: |
+          cd src/
+          pandoc --syntax-definition="zig.xml" --highlight-style="zig.theme" zig.yaml *.md -o learning-zig.ru.epub
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: learning-zig-output
+          path: |
+            src/learning-zig.ru.docx
+            src/learning-zig.ru.epub
