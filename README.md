@@ -24,3 +24,19 @@ pandoc --syntax-definition="zig.xml" --highlight-style="zig.theme" zig.yaml *.md
 cd src/
 pandoc --syntax-definition="zig.xml" --highlight-style="zig.theme" *.md -o learning-zig.ru.docx
 ```
+
+## latex
+```
+pandoc --syntax-definition="zig.xml" \
+       --highlight-style="zig.theme" \
+       *.md -o learning-zig.ru.tex \
+       --standalone \
+       --to=latex \
+       -V documentclass=report \
+       -V lang=ru \
+       -V mainfont="DejaVu Serif" \
+       -V monofont="DejaVu Sans Mono" \
+       -V geometry:"left=10mm, right=10mm, top=20mm, bottom=25mm" \
+       --toc \
+       --number-sections
+```
